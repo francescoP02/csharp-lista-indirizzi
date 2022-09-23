@@ -19,7 +19,7 @@ public class Address
 
     public Address(string name, string surname, string street, string city, string province, string zip)
     {
-        if(name == "")
+        if (name == "")
         {
             throw new Exception("Name not insered");
         }

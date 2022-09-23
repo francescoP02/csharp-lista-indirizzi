@@ -13,59 +13,41 @@ string path = "C:/.Net/csharp-lista-indirizzi/addresses.csv";
 
 if (File.Exists(path))
 {
-    StreamReader file = File.OpenText(path);
+        StreamReader file = File.OpenText(path);
 
-    bool finish = false;
+        int count = 0;
 
-    int count = 0;
-
-    try
-    {
 
         while (!file.EndOfStream)
         {
-            if (finish != true) {
-                try
+            try
+            {                   
+                string row = file.ReadLine();
+
+                string[] data = row.Split(",");
+
+                if (data.Count() == 6)
                 {
-                    string row = file.ReadLine();
-
-                    string[] data = row.Split(",");
-
-                    if (data.Count() == 6)
-                    {
-                        addressesList.Add(new Address(data[0], data[1], data[2], data[3], data[4], data[5]));
-
-                        finish = false;
-                    }
-
-                    else
-                    {
-                        Console.WriteLine(Environment.NewLine);
-                        Console.WriteLine($"Error: Invalid data number in line {count + 1}");
-                    }
+                    addressesList.Add(new Address(data[0], data[1], data[2], data[3], data[4], data[5]));
 
                 }
-                catch (Exception e)
+
+                else
                 {
                     Console.WriteLine(Environment.NewLine);
-                    Console.WriteLine($"Error: {e.Message} in line {count + 1}");
+                    Console.WriteLine($"Error: Invalid data number in line {count + 1}");
                 }
 
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(Environment.NewLine);
+                Console.WriteLine($"Error: {e.Message} in line {count + 1}");
+            }
+
 
             count++;
         }
-
-    }
-    catch (IndexOutOfRangeException)
-    {
-        finish = true;
-    }
-
-    finally
-    {
-        file.Close();
-    }
 }
 
 Console.WriteLine(Environment.NewLine);
